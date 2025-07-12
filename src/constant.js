@@ -1,7 +1,7 @@
 export const cookiesOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
+  sameSite: 'None',
 };
 
 export const corsOptions = {
