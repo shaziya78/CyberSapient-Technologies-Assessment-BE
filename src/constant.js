@@ -4,4 +4,4 @@ export const cookiesOptions = {
     sameSite: 'Strict',
   }
 
-export const corsOptions = { origin: "http://localhost:5173", credentials: true }
+export const corsOptions = { origin: "*", credentials: true }
