@@ -5,6 +5,6 @@ export const cookiesOptions = {
 };
 
 export const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173", "https://cyber-sapient-technologies-assessme.vercel.app"],
   credentials: true,
 };
