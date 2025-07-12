@@ -13,7 +13,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   const options = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "Strict",
+    sameSite: process.env.NODE_ENV === "production" ? "Strict" : "Lax",
   };
 
   res
@@ -79,7 +79,7 @@ export const register = async (req, res) => {
 
     sendTokenResponse(user, 201, res);
   } catch (error) {
-    console.log("error in register user", error)
+    console.log("error in register user", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -114,7 +114,6 @@ export const login = async (req, res) => {
 };
 
 export const getMe = async (req, res) => {
-
   const userToken = req?.user;
 
   if (!userToken?._id) {
@@ -159,7 +158,7 @@ export const getCurrentAdmin = async (req, res) => {
       });
     }
 
-    if (adminUser.role !== 'admin') {
+    if (adminUser.role !== "admin") {
       return res.status(403).json({
         message: "Access denied. Only admins can access this.",
       });
@@ -171,12 +170,10 @@ export const getCurrentAdmin = async (req, res) => {
       email: adminUser.email,
       role: adminUser.role,
     });
-
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 
 export const refreshToken = async (req, res) => {
   const token = req.cookies.refreshToken;
@@ -233,7 +230,7 @@ export const logoutUser = async (req, res) => {
   const user = await User.findByIdAndUpdate(userToken._id, {
     $unset: { refreshToken: "" },
   });
-  
+
   if (!user) {
     return res.status(404).json({
       message: "user not found",
@@ -246,4 +243,3 @@ export const logoutUser = async (req, res) => {
     .status(200)
     .json({ message: "Logout successful" });
 };
-
